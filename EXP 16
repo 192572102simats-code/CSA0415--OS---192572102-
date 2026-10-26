@@ -12,35 +12,43 @@ int main()
 {
     FILE *fp;
     struct employee e;
-    int n, i, pos;
+    int choice, n;
 
-    fp = fopen("employee.dat", "wb+");
+    fp = fopen("emp.dat", "wb+");
+
+    if(fp == NULL)
+    {
+        printf("File cannot be opened");
+        return 1;
+    }
 
     printf("Enter number of employees: ");
     scanf("%d", &n);
 
-    for(i = 0; i < n; i++)
+    for(int i = 0; i < n; i++)
     {
-        printf("Enter ID, Name and Salary: ");
+        printf("Enter ID, name and salary: ");
         scanf("%d %19s %f", &e.id, e.name, &e.salary);
         fwrite(&e, sizeof(e), 1, fp);
     }
 
-    printf("Enter employee number to access: ");
-    scanf("%d", &pos);
+    printf("Enter employee number to search: ");
+    scanf("%d", &choice);
 
-    if(pos >= 1 && pos <= n)
+    if(choice >= 1 && choice <= n)
     {
-        fseek(fp, (pos - 1) * sizeof(e), SEEK_SET);
+        fseek(fp, (choice - 1) * sizeof(e), SEEK_SET);
         fread(&e, sizeof(e), 1, fp);
 
         printf("\nEmployee Details\n");
-        printf("ID: %d\n", e.id);
-        printf("Name: %s\n", e.name);
-        printf("Salary: %.2f\n", e.salary);
+        printf("ID = %d\n", e.id);
+        printf("Name = %s\n", e.name);
+        printf("Salary = %.2f\n", e.salary);
     }
     else
-        printf("Invalid employee number!\n");
+    {
+        printf("Invalid employee number");
+    }
 
     fclose(fp);
     return 0;
