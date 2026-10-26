@@ -1,0 +1,91 @@
+
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char dir[10][20], file[10][10][20];
+    int d = 0, n[10] = {0};
+    int i, j, choice, user;
+    char name[20];
+
+    while(1)
+    {
+        printf("\n1. Create Directory");
+        printf("\n2. Create File");
+        printf("\n3. Display Files");
+        printf("\n4. Exit");
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("Enter directory name: ");
+                scanf("%19s", name);
+
+                for(i = 0; i < d; i++)
+                    if(strcmp(dir[i], name) == 0)
+                        break;
+
+                if(i < d)
+                    printf("Directory already exists!\n");
+                else if(d < 10)
+                {
+                    strcpy(dir[d], name);
+                    d++;
+                    printf("Directory created!\n");
+                }
+                else
+                    printf("Directory limit reached!\n");
+                break;
+
+            case 2:
+                printf("Enter directory number (1-%d): ", d);
+                scanf("%d", &user);
+
+                if(user < 1 || user > d)
+                {
+                    printf("Invalid directory!\n");
+                    break;
+                }
+
+                i = user - 1;
+
+                printf("Enter file name: ");
+                scanf("%19s", name);
+
+                for(j = 0; j < n[i]; j++)
+                    if(strcmp(file[i][j], name) == 0)
+                        break;
+
+                if(j < n[i])
+                    printf("File already exists!\n");
+                else if(n[i] < 10)
+                {
+                    strcpy(file[i][n[i]], name);
+                    n[i]++;
+                    printf("File created!\n");
+                }
+                else
+                    printf("Directory is full!\n");
+                break;
+
+            case 3:
+                for(i = 0; i < d; i++)
+                {
+                    printf("\nDirectory: %s\n", dir[i]);
+
+                    for(j = 0; j < n[i]; j++)
+                        printf("%s\n", file[i][j]);
+                }
+                break;
+
+            case 4:
+                return 0;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+}
